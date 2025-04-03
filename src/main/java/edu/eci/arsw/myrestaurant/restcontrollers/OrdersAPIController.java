@@ -44,7 +44,7 @@ public class OrdersAPIController {
             JSONArray jsonArray = new JSONArray();
             for (Integer orderId : r.getTablesWithOrders()) {
                 JSONObject json = new JSONObject(r.getTableOrder(orderId));
-                jsonArray.put("total = " + r.calculateTableBill(orderId));
+                jsonArray.put("total de  la cuenta= " + r.calculateTableBill(orderId));
                 jsonArray.put(json);
 
                 return new ResponseEntity<>(jsonArray.toString(), HttpStatus.ACCEPTED);

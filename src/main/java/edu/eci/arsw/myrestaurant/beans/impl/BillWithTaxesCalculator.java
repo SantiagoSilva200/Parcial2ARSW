@@ -7,12 +7,14 @@ import edu.eci.arsw.myrestaurant.beans.TaxesCalculator;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import edu.eci.arsw.myrestaurant.beans.impl.colombia.StandardTaxesCalculator;
 
 
 public class BillWithTaxesCalculator implements BillCalculator {
 
 
     TaxesCalculator taxescalc;
+    StandardTaxesCalculator s;
 
     @Override
     public int calculateBill(Order o, Map<String, RestaurantProduct> productsMap) {
@@ -20,7 +22,8 @@ public class BillWithTaxesCalculator implements BillCalculator {
         
         for (String p : o.getOrderedDishes()) {
             RestaurantProduct rp=productsMap.get(p);
-            total += (o.getDishOrderedAmount(p) * (rp.getPrice() * (1 + taxescalc.getProductTaxes(rp))));
+            float taxesP = s.getProductTaxes(rp); //aplicar impuestos a todos los productos de la orden
+            total += (int) (o.getDishOrderedAmount(p) * taxesP);
         }
         return total;
 
